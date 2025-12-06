@@ -42,7 +42,7 @@ const createMovieCards = (movies) => {
             'shadow-sky-500/30'
         );
         movieCard.innerHTML = `
-            <div class="flex flex-col md:flex-row gap-8 items-center">
+            <div class=" movie-card-body flex flex-col md:flex-row gap-8 items-center">
               <img class="w-48 h-auto object-cover flex-shrink-0" src=${imageBaseUrl}${
             movie.poster_path
         } alt="${movie.original_title} Poster" />
@@ -70,7 +70,7 @@ const createMovieCards = (movies) => {
 };
 
 const updateNoteInDOM = (form, noteText) => {
-    const card = form.closest('.flex-col.md\\:flex-row');
+    const card = form.closest('.movie-card-body');
     const noteDetails = card.querySelector('.note-details');
     if (noteDetails) {
         const noteContent = noteDetails.querySelector('.note-content');
@@ -96,7 +96,7 @@ container.addEventListener('submit', (e) => {
     }
 
     const storedMovies = JSON.parse(
-        localStorage.getItem('favoriteMovies') || '[]'
+        localStorage.getItem('favouriteMovies') || '[]'
     );
 
     const updatedMovies = storedMovies.map((movie) => {
@@ -106,7 +106,7 @@ container.addEventListener('submit', (e) => {
         return movie;
     });
 
-    localStorage.setItem('favoriteMovies', JSON.stringify(updatedMovies));
+    localStorage.setItem('favouriteMovies', JSON.stringify(updatedMovies));
 
     alert(`Note saved for movie ID: ${movieId}!`);
 
