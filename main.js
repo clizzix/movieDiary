@@ -15,6 +15,7 @@ fetch(url, options)
     renderMovies(data.results);
   })
   .catch((err) => console.error(err));
+const BASE_URL = 'https://api.themoviedb.org/3';
 
 const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 //local storage key for favourite movies
@@ -43,8 +44,41 @@ function createMovieCard(movie) {
   }
   const title = document.createElement('h2');
   title.textContent = movie.title;
+  // favourites button
+  const favBtn = document.createElement('button');
+
+  if (isFavourite(movie.id)) {
+    // already in favourites
+    favBtn.textContent = 'In favourites';
+    favBtn.disabled = true;
+  } else {
+    favBtn.textContent = 'Add to favourites';
+    favBtn.disabled = false;
+  }
+
+  // click handler for favourites
+  favBtn.addEventListener('click', () => {
+    const favourites = getFavouriteMovies();
+
+    // if ist already in fauvorites,no duplicate
+    if (favourites.some((m) => m.id === movie.id)) {
+      favBtn.textContent = 'In favourites';
+      favBtn.disabled = true;
+      return;
+    }
+
+    favourites.push(movie);
+    saveFavouriteMovies(favourites);
+    favBtn.textContent = 'In favourites';
+    favBtn.disabled = true;
+
+    console.log(`${movie.title} added to favourites`);
+  });
+
+
   card.appendChild(img);
   card.appendChild(title);
+  card.appendChild(favBtn);
   return card;
 }
 //more movie cards
@@ -60,4 +94,52 @@ function renderMovies(movies) {
     const card = createMovieCard(movie);
     moviesContainer.appendChild(card);
   });
+}
+//search function
+function searchMovies(query) {
+  const searchUrl = `${BASE_URL}/search/movie?query=${encodeURIComponent(
+    query
+  )}`;
+  fetch(searchUrl, options)
+    .then((res) => res.json())
+    .then((data) => {
+      const movies = data.results;
+      //alert if no movies found
+      if (!movies || movies.length === 0) {
+        alert(`No movies found for "${query}"`);
+        renderMovies([]);
+        return;
+      }
+      renderMovies(movies);
+    })
+    .catch((err) => console.error(err));
+}
+//event listener for search form
+searchForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const query = searchInput.value.trim();
+  if (!query) {
+    alert('Please enter a search term');
+    return;
+  }
+  searchMovies(query);
+});
+//read favourite movies from local storage
+function getFavouriteMovies() {
+  try {
+    const favs = localStorage.getItem(FAV_STORAGE_KEY);
+    return favs ? JSON.parse(favs) : [];
+  } catch (error) {
+    console.error('Error reading favourite movies from local storage', error);
+    return [];
+  }
+}
+//save favourite movies to local storage
+function saveFavouriteMovies(favs) {
+  localStorage.setItem(FAV_STORAGE_KEY, JSON.stringify(favs));
+}
+//check if a movie is in favourites
+function isFavourite(movieId) {
+  const favs = getFavouriteMovies();
+  return favs.some((movie) => movie.id === movieId);
 }
