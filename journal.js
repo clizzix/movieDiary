@@ -36,6 +36,7 @@ const createMovieCards = (movies) => {
             'p-8',
             'text-white',
             'rounded-xl',
+            'relative', // Make this the positioning context for the delete button
             'border-2',
             'border-sky-500',
             'shadow-lg',
@@ -43,6 +44,9 @@ const createMovieCards = (movies) => {
         );
         movieCard.innerHTML = `
             <div class="movie-card-body flex flex-col md:flex-row gap-8 items-center">
+              <button class="delete-btn absolute top-4 right-4" data-movie-id="${
+                  movie.id
+              }"><span class="material-symbols-outlined bg-red-500 p-2 rounded-xl hover:bg-red-800 cursor-pointer">delete</span></button>
               <img class="w-48 h-auto object-cover flex-shrink-0" src=${imageBaseUrl}${
             movie.poster_path
         } alt="${movie.original_title} Poster" />
@@ -112,6 +116,29 @@ container.addEventListener('submit', (e) => {
 
     updateNote(form, noteText);
     form.reset();
+});
+
+container.addEventListener('click', (e) => {
+    const deleteButton = e.target.closest('.delete-btn');
+
+    if (!deleteButton) {
+        return;
+    }
+
+    const movieId = deleteButton.dataset.movieId;
+
+    const favoriteMovies = JSON.parse(
+        localStorage.getItem('favouriteMovies') || '[]'
+    );
+    const updatedMovies = favoriteMovies.filter(
+        (movie) => movie.id.toString() !== movieId
+    );
+    localStorage.setItem('favouriteMovies', JSON.stringify(updatedMovies));
+
+    const cardToRemove = deleteButton.closest('.bg-slate-950');
+    if (cardToRemove) {
+        cardToRemove.remove();
+    }
 });
 
 // fetchPopularMovies();
