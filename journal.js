@@ -8,7 +8,16 @@ const options = {
     },
 };
 
-fetch(url, options)
-    .then((res) => res.json())
-    .then((json) => console.log(json))
-    .catch((err) => console.error(err));
+const container = document.getElementById('movie-cards');
+
+const fetchPopularMovies = async () => {
+    try {
+        const res = await fetch(url, options);
+        const data = await res.json();
+        console.log(data);
+    } catch (e) {
+        console.error(e);
+    }
+};
+
+fetchPopularMovies();
