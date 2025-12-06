@@ -11,6 +11,7 @@ const options = {
 const container = document.getElementById('movie-cards');
 const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
+// Placeholder to populate dataset
 const fetchPopularMovies = async () => {
     try {
         const res = await fetch(url, options);
@@ -21,12 +22,14 @@ const fetchPopularMovies = async () => {
     }
 };
 
+// Render Movies from the local Storage
 const renderFavoriteMovies = () => {
     const storedMoviesString = localStorage.getItem('favoriteMovies') || '[]';
     const favoriteMovies = JSON.parse(storedMoviesString);
     createMovieCards(favoriteMovies);
 };
 
+// Create Movie Cards from each Movie Object and set inner HTML
 const createMovieCards = (movies) => {
     movies.forEach((movie) => {
         const movieCard = document.createElement('div');
@@ -42,7 +45,7 @@ const createMovieCards = (movies) => {
             'shadow-sky-500/30'
         );
         movieCard.innerHTML = `
-            <div class="flex flex-col md:flex-row gap-8 items-center">
+            <div class="movie-card-body flex flex-col md:flex-row gap-8 items-center">
               <img class="w-48 h-auto object-cover flex-shrink-0" src=${imageBaseUrl}${
             movie.poster_path
         } alt="${movie.original_title} Poster" />
@@ -69,8 +72,10 @@ const createMovieCards = (movies) => {
     });
 };
 
+// update the note content in the dom
 const updateNoteInDOM = (form, noteText) => {
-    const card = form.closest('.flex-col.md\\:flex-row');
+    // closest identifies the next parent in the dom and applies the element in this case to the variable card
+    const card = form.closest('.movie-card-body');
     const noteDetails = card.querySelector('.note-details');
     if (noteDetails) {
         const noteContent = noteDetails.querySelector('.note-content');
@@ -78,34 +83,36 @@ const updateNoteInDOM = (form, noteText) => {
     }
 };
 
+// Add event Listener to the form
 container.addEventListener('submit', (e) => {
     if (!e.target.classList.contains('note-form')) {
         return;
     }
 
     e.preventDefault();
-
+    // set the form as the event target, find the related Id, get the Input from the submission
     const form = e.target;
     const movieId = form.dataset.movieId;
     const noteInput = form.querySelector('.note-input');
     const noteText = noteInput.value;
 
+    // Verify Input
     if (!noteText) {
         alert('Please enter a note before saving.');
         return;
     }
-
+    // Get Movies from LocalStorage
     const storedMovies = JSON.parse(
         localStorage.getItem('favoriteMovies') || '[]'
     );
-
+    // Append the note to the regarding Object if the id matches
     const updatedMovies = storedMovies.map((movie) => {
         if (movie.id.toString() === movieId) {
             return { ...movie, note: noteText };
         }
         return movie;
     });
-
+    // Stringify the updated object and overwrite the old one
     localStorage.setItem('favoriteMovies', JSON.stringify(updatedMovies));
 
     alert(`Note saved for movie ID: ${movieId}!`);
