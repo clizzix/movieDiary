@@ -64,6 +64,25 @@
       </section>
     </main>
 
+    <!-- Search feedback dialog -->
+    <dialog
+      id="search-dialog"
+      class="w-[95%] max-w-md rounded-2xl bg-slate-800 p-4"
+    >
+      <div class="mb-2 flex items-center justify-between">
+        <h2 class="text-sm font-semibold tracking-tight">Search</h2>
+        <button
+          type="button"
+          id="dialog-close"
+          aria-label="Close"
+          class="text-lg leading-none text-slate-300"
+        >
+          ×
+        </button>
+      </div>
+      <div id="dialog-content" class="text-sm text-slate-100"></div>
+    </dialog>
+
     <script src="main.js"></script>
   </body>
 </html>
