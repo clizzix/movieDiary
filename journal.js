@@ -11,18 +11,18 @@ const options = {
 const container = document.getElementById('movie-cards');
 const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
-const fetchPopularMovies = async () => {
-    try {
-        const res = await fetch(url, options);
-        const data = await res.json();
-        createMovieCards(data.results);
-    } catch (e) {
-        console.error(e);
-    }
-};
+// const fetchPopularMovies = async () => {
+//     try {
+//         const res = await fetch(url, options);
+//         const data = await res.json();
+//         createMovieCards(data.results);
+//     } catch (e) {
+//         console.error(e);
+//     }
+// };
 
 const renderFavoriteMovies = () => {
-    const storedMoviesString = localStorage.getItem('favoriteMovies') || '[]';
+    const storedMoviesString = localStorage.getItem('favouriteMovies') || '[]';
     const favoriteMovies = JSON.parse(storedMoviesString);
     createMovieCards(favoriteMovies);
 };
@@ -114,4 +114,5 @@ container.addEventListener('submit', (e) => {
     form.reset();
 });
 
-fetchPopularMovies();
+// fetchPopularMovies();
+renderFavoriteMovies();
