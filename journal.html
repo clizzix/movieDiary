@@ -6,15 +6,30 @@
         <title>MovieDiary</title>
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     </head>
-    <body>
-        <header>
-            <h1>MovieDiary</h1>
+    <body
+        class="bg-[url(https://images.pexels.com/photos/713149/pexels-photo-713149.jpeg)] bg-top-right"
+    >
+        <header
+            class="bg-linear-to-r from-slate-950 to-slate-850 text-white flex justify-between px-8 md:px-32 py-4 items-center shadow-2xl"
+        >
+            <h1 class="text-xl md:text-2xl text-shadow-xl">Movie Diary</h1>
             <nav>
-                <ul>
+                <ul class="flex gap-8 text-shadow-xl">
                     <li><a href="index.html">Homepage</a></li>
                     <li><a href="#">Journal</a></li>
                 </ul>
             </nav>
         </header>
+        <main>
+            <section id="hero">
+                <div id="hero-div" class="p-8">
+                    <h2 class="text-xl text-white text-center text-shadow-xl">
+                        Your favorite Movies are here...
+                    </h2>
+                </div>
+            </section>
+            <section id="movie-cards"></section>
+        </main>
     </body>
+    <script src="journal.js"></script>
 </html>
