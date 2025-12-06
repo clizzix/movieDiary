@@ -69,7 +69,7 @@ const createMovieCards = (movies) => {
     });
 };
 
-const updateNoteInDOM = (form, noteText) => {
+const updateNote = (form, noteText) => {
     const card = form.closest('.movie-card-body');
     const noteDetails = card.querySelector('.note-details');
     if (noteDetails) {
@@ -110,7 +110,7 @@ container.addEventListener('submit', (e) => {
 
     alert(`Note saved for movie ID: ${movieId}!`);
 
-    updateNoteInDOM(form, noteText);
+    updateNote(form, noteText);
     form.reset();
 });
 
