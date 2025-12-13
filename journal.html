@@ -11,24 +11,43 @@
         />
     </head>
     <body
-        class="bg-[url(https://images.pexels.com/photos/713149/pexels-photo-713149.jpeg)] bg-top-right"
+        class="bg-[url(https://images.pexels.com/photos/713149/pexels-photo-713149.jpeg)] bg-top-right text-slate-100 antialiased"
     >
         <header
-            class="bg-linear-to-r from-slate-950 to-slate-850 text-white flex justify-between px-8 md:px-32 py-4 items-center shadow-2xl fixed top-0 inset-x-0 z-50"
+            class="sticky top-0 z-20 border-b border-slate-800 bg-slate-950/80 backdrop-blur-md"
         >
-            <h1 class="text-xl md:text-2xl text-shadow-xl">Movie Journal</h1>
-            <nav>
-                <ul class="flex gap-8 text-shadow-xl">
-                    <li><a href="index.html">Homepage</a></li>
-                    <li>
-                        <a class="border-b-2 border-sky-500" href="#"
-                            >Journal</a
-                        >
-                    </li>
-                </ul>
-            </nav>
+            <div
+                class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3"
+            >
+                <div class="flex items-center gap-3">
+                    <span
+                        class="grid h-9 w-9 place-items-center rounded-xl border border-sky-500/40 bg-slate-900 shadow-lg shadow-sky-500/20"
+                        >🎬</span
+                    >
+                    <div class="leading-tight">
+                        <div class="text-lg font-semibold tracking-tight">
+                            Movie Journal
+                        </div>
+                        <div class="text-xs text-slate-400">
+                            TMDB Movie Diary
+                        </div>
+                    </div>
+                </div>
+                <nav class="flex items-center gap-2 text-sm">
+                    <a
+                        href="index.html"
+                        class="rounded-xl border border-transparent px-3 py-1.5 text-slate-300 hover:border-slate-700 hover:bg-slate-900 hover:text-slate-50"
+                        >Homepage</a
+                    >
+                    <a
+                        href="journal.html"
+                        class="rounded-xl border border-sky-500/40 bg-slate-900 px-3 py-1.5 font-medium text-slate-50 shadow-sm shadow-sky-500/20"
+                        >Journal</a
+                    >
+                </nav>
+            </div>
         </header>
-        <main class="pt-24">
+        <main class="mx-auto max-w-6xl px-4 pb-12 pt-10">
             <section id="hero">
                 <div id="hero-div" class="p-8">
                     <h2 class="text-xl text-white text-center text-shadow-xl">
