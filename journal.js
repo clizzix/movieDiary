@@ -21,6 +21,41 @@ const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 //     }
 // };
 
+const showCustomAlert = (message, type = 'info') => {
+    const alertEl = document.createElement('div');
+    alertEl.textContent = message;
+
+    // Base classes
+    alertEl.classList.add(
+        'fixed',
+        'top-1/2',
+        'left-1/2',
+        '-translate-x-1/2',
+        '-translate-y-1/2',
+        'p-4',
+        'rounded-lg',
+        'text-white',
+        'shadow-lg',
+        'z-50',
+        'transition-opacity',
+        'duration-300'
+    );
+
+    // Type-specific classes
+    if (type === 'success') {
+        alertEl.classList.add('bg-green-500');
+    } else if (type === 'error') {
+        alertEl.classList.add('bg-red-500');
+    }
+
+    document.body.appendChild(alertEl);
+
+    setTimeout(() => {
+        alertEl.classList.add('opacity-0');
+        alertEl.addEventListener('transitionend', () => alertEl.remove());
+    }, 3000);
+};
+
 const renderFavoriteMovies = () => {
     const storedMoviesString = localStorage.getItem('favouriteMovies') || '[]';
     const favoriteMovies = JSON.parse(storedMoviesString);
@@ -95,7 +130,7 @@ container.addEventListener('submit', (e) => {
     const noteText = noteInput.value;
 
     if (!noteText) {
-        alert('Please enter a note before saving.');
+        showCustomAlert('Please enter a note before saving.', 'error');
         return;
     }
 
@@ -112,7 +147,7 @@ container.addEventListener('submit', (e) => {
 
     localStorage.setItem('favouriteMovies', JSON.stringify(updatedMovies));
 
-    alert(`Note saved for movie ID: ${movieId}!`);
+    showCustomAlert('Note saved successfully!', 'success');
 
     updateNote(form, noteText);
     form.reset();
