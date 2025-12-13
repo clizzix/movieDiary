@@ -106,18 +106,19 @@ function createMovieCard(movie) {
   const favBtn = document.createElement('button');
 
   const setFavBtnState = () => {
-    if (isFavourite(movie.id)) {
-      favBtn.textContent = 'In favourites';
-      favBtn.disabled = true;
-      favBtn.className =
-        'mt-auto bg-slate-700 rounded-xl px-4 py-2 text-sm cursor-not-allowed';
-    } else {
-      favBtn.textContent = 'Add to favourites';
-      favBtn.disabled = false;
-      favBtn.className =
-        'mt-auto bg-sky-500 rounded-xl px-4 py-2 text-sm hover:bg-sky-600 cursor-pointer';
-    }
-  };
+  if (isFavourite(movie.id)) {
+    favBtn.textContent = '♥';
+    favBtn.disabled = true;
+    favBtn.className =
+      'mt-auto bg-slate-700 rounded-xl px-4 py-2 text-2xl cursor-not-allowed leading-none';
+  } else {
+    favBtn.textContent = '♥';
+    favBtn.disabled = false;
+    favBtn.className =
+      'mt-auto bg-sky-500 rounded-xl px-4 py-2 text-2xl hover:bg-sky-600 cursor-pointer leading-none';
+  }
+};
+
 
   setFavBtnState();
 
