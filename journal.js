@@ -1,31 +1,10 @@
-// const url = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
-// const options = {
-//     method: 'GET',
-//     headers: {
-//         accept: 'application/json',
-//         Authorization:
-//             'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMmI0NWNiMmNhMzFiZGJmMTIxYzA5ZTY4NmNiYThlMiIsIm5iZiI6MTc2Mjg2OTU5MC44NzMsInN1YiI6IjY5MTM0MTU2ZTlhMGUxNTI3Y2QyNjI5ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ufln2p4E1HaD6bhRyUitoixovWuMcbxiubpFQ7VV6Eg',
-//     },
-// };
-
 const container = document.getElementById('movie-cards');
 const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
-
-// const fetchPopularMovies = async () => {
-//     try {
-//         const res = await fetch(url, options);
-//         const data = await res.json();
-//         createMovieCards(data.results);
-//     } catch (e) {
-//         console.error(e);
-//     }
-// };
 
 const showCustomAlert = (message, type = 'info') => {
     const alertEl = document.createElement('div');
     alertEl.textContent = message;
 
-    // Base classes
     alertEl.classList.add(
         'fixed',
         'top-1/2',
@@ -41,7 +20,6 @@ const showCustomAlert = (message, type = 'info') => {
         'duration-300'
     );
 
-    // Type-specific classes
     if (type === 'success') {
         alertEl.classList.add('bg-green-500');
     } else if (type === 'error') {
@@ -67,8 +45,8 @@ const createMovieCards = (movies) => {
         const movieCard = document.createElement('div');
         movieCard.classList.add(
             'bg-slate-950',
-            'mb-8', // Use margin-bottom instead of margin on all sides
-            'p-8', // Keep padding
+            'mb-8',
+            'p-8',
             'text-white',
             'rounded-xl',
             'relative',
