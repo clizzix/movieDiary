@@ -32,8 +32,8 @@ const createMovieCards = (movies) => {
         const movieCard = document.createElement('div');
         movieCard.classList.add(
             'bg-slate-950',
-            'm-8',
-            'p-8',
+            'mb-8', // Use margin-bottom instead of margin on all sides
+            'p-8', // Keep padding
             'text-white',
             'rounded-xl',
             'relative',
