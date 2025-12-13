@@ -7,10 +7,9 @@ const showCustomAlert = (message, type = 'info') => {
 
     alertEl.classList.add(
         'fixed',
-        'top-1/2',
+        'top-20',
         'left-1/2',
         '-translate-x-1/2',
-        '-translate-y-1/2',
         'p-4',
         'rounded-lg',
         'text-white',
