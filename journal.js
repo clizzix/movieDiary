@@ -36,7 +36,7 @@ const createMovieCards = (movies) => {
             'p-8',
             'text-white',
             'rounded-xl',
-            'relative', // Make this the positioning context for the delete button
+            'relative',
             'border-2',
             'border-sky-500',
             'shadow-lg',
