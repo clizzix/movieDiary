@@ -28,59 +28,123 @@ const searchInput = document.getElementById('search-input');
 const searchDialog = document.getElementById('search-dialog');
 const dialogContent = document.getElementById('dialog-content');
 const dialogCloseBtn = document.getElementById('dialog-close');
+
+function openDialog(html) {
+  dialogContent.innerHTML = html;
+  searchDialog.showModal();
+}
+
+dialogCloseBtn.addEventListener('click', () => searchDialog.close());
+
 // clear the movies container
 function clearMovies() {
   moviesContainer.innerHTML = '';
 }
 //first moviecard
 function createMovieCard(movie) {
-  const card = document.createElement('article');
+  const card = document.createElement('div');
+  card.classList.add(
+    'bg-slate-950',
+    'p-6',
+    'text-white',
+    'rounded-xl',
+    'border-2',
+    'border-sky-500',
+    'shadow-lg',
+    'shadow-sky-500/30',
+    'h-full'
+  );
+
+  // wrapper
+  const body = document.createElement('div');
+  body.classList.add(
+    'movie-card-body',
+    'flex',
+    'flex-col',
+    'gap-6',
+    'items-center',
+    'h-full'
+  );
+
+  // image
   const img = document.createElement('img');
+  img.classList.add('w-48', 'h-auto', 'object-cover', 'flex-shrink-0');
+
   if (movie.poster_path) {
     img.src = `${IMG_BASE_URL}${movie.poster_path}`;
-    img.alt = movie.title;
+    img.alt = `${movie.title} Poster`;
   } else {
     img.alt = 'No image available';
   }
-  const title = document.createElement('h2');
+
+  // content column (title, info, button)
+  const content = document.createElement('div');
+  content.classList.add(
+    'flex',
+    'flex-col',
+    'gap-3',
+    'text-center',
+    'self-stretch',
+    'flex-1' //
+  );
+
+  const title = document.createElement('h3');
+  title.classList.add('text-2xl', 'md:text-3xl');
   title.textContent = movie.title;
+
+  const info = document.createElement('p');
+  info.classList.add('text-slate-300', 'text-sm');
+
+  const year = movie.release_date ? movie.release_date.slice(0, 4) : 'N/A';
+  const rating =
+    typeof movie.vote_average === 'number'
+      ? movie.vote_average.toFixed(1)
+      : 'N/A';
+  info.textContent = `Year: ${year} • Rating: ${rating}`;
+
   // favourites button
   const favBtn = document.createElement('button');
 
-  if (isFavourite(movie.id)) {
-    // already in favourites
-    favBtn.textContent = 'In favourites';
-    favBtn.disabled = true;
-  } else {
-    favBtn.textContent = 'Add to favourites';
-    favBtn.disabled = false;
-  }
+  const setFavBtnState = () => {
+    if (isFavourite(movie.id)) {
+      favBtn.textContent = 'In favourites';
+      favBtn.disabled = true;
+      favBtn.className =
+        'mt-auto bg-slate-700 rounded-xl px-4 py-2 text-sm cursor-not-allowed';
+    } else {
+      favBtn.textContent = 'Add to favourites';
+      favBtn.disabled = false;
+      favBtn.className =
+        'mt-auto bg-sky-500 rounded-xl px-4 py-2 text-sm hover:bg-sky-600 cursor-pointer';
+    }
+  };
 
-  // click handler for favourites
+  setFavBtnState();
+
   favBtn.addEventListener('click', () => {
     const favourites = getFavouriteMovies();
 
-    // if ist already in fauvorites,no duplicate
-    if (favourites.some((m) => m.id === movie.id)) {
-      favBtn.textContent = 'In favourites';
-      favBtn.disabled = true;
-      return;
+    if (!favourites.some((m) => m.id === movie.id)) {
+      favourites.push(movie);
+      saveFavouriteMovies(favourites);
     }
 
-    favourites.push(movie);
-    saveFavouriteMovies(favourites);
-    favBtn.textContent = 'In favourites';
-    favBtn.disabled = true;
-
-    console.log(`${movie.title} added to favourites`);
+    setFavBtnState();
   });
 
+  // build
+  content.appendChild(title);
+  content.appendChild(info);
+  content.appendChild(favBtn);
 
-  card.appendChild(img);
-  card.appendChild(title);
-  card.appendChild(favBtn);
+  body.appendChild(img);
+  body.appendChild(content);
+
+  card.appendChild(body);
+
   return card;
 }
+
 //more movie cards
 function renderMovies(movies) {
   clearMovies();
@@ -106,7 +170,7 @@ function searchMovies(query) {
       const movies = data.results;
       //alert if no movies found
       if (!movies || movies.length === 0) {
-        alert(`No movies found for "${query}"`);
+        openDialog(`No movies found for "<strong>${query}</strong>"`);
         renderMovies([]);
         return;
       }
@@ -119,7 +183,8 @@ searchForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const query = searchInput.value.trim();
   if (!query) {
-    alert('Please enter a search term');
+    openDialog('Please enter a search term.');
+
     return;
   }
   searchMovies(query);
