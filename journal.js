@@ -52,7 +52,8 @@ const createMovieCards = (movies) => {
             'border-2',
             'border-sky-500',
             'shadow-lg',
-            'shadow-sky-500/30'
+            'shadow-sky-500/30',
+            'hover:-translate-y-1'
         );
         movieCard.innerHTML = `
             <div class="movie-card-body flex flex-col md:flex-row gap-8 items-center">
